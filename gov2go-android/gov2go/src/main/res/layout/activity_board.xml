@@ -1,0 +1,38 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="org.transparencia.gov2go.activity.BoardActivity">
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp"
+        android:stretchColumns="*">
+
+        <TableRow>
+            <Button
+                android:id="@+id/nova_ocorrencia"
+                android:layout_height="wrap_content"
+                android:background="@color/transparente"
+                android:drawableTop="@drawable/ic_new"
+                android:text="@string/nova_ocorrencia"
+                android:onClick="novaOcorrencia"/>
+
+            <Button
+                android:id="@+id/informacoes"
+                android:layout_height="wrap_content"
+                android:background="@color/transparente"
+                android:drawableTop="@drawable/ic_info_user"
+                android:text="@string/informacoes"
+                android:onClick="informacoes"/>
+        </TableRow>
+
+    </TableLayout>
+
+</LinearLayout>

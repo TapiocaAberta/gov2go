@@ -1,0 +1,7 @@
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:textColor">#ff575757</item>
+        <item name="android:typeface">normal</item>
+    </style>
+</resources>
+

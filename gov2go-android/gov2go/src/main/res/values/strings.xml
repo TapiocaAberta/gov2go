@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Gov2Go Transparência SJC</string>
+    <string name="email">Email</string>
+    <string name="senha">Senha</string>
+    <string name="entrar">Entrar</string>
+    <string name="title_activity_board">BoardActivity</string>
+    <string name="nova_ocorrencia">Nova Ocorrencia</string>
+    <string name="informacoes">Informaçoes</string>
+    <string name="title_activity_ocorrencias">OcorrenciasActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_nova_ocorrencia">Nova Ocorrência</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="imagem">Adicionar Foto</string>
+    <string name="mensagem">Obs: Vamos capturar sua localização automaticamente</string>
+    <string name="titulo">Título</string>
+    <string name="mensagem_ocorrencia">Mensagem</string>
+    <string name="enviar">Enviar</string>
+    <string name="foto_camera">Tirar Foto</string>
+    <string name="foto_galeria">Pegar uma foto da Galeria</string>
+    <string name="titulo_fotos">Imagens</string>
+    <string name="mensagem_principal">Nós do Transparência SJC não temos nenhuma relação
+                                      com a Prefeitura Municipal de São José dos campos</string>
+    <string name="title_activity_novo_usuario">NovoUsuarioActivity</string>
+
+    <string name="nome">Nome</string>
+    <string name="salvar">Salvar</string>
+    <string name="cancelar">Cancelar</string>
+
+</resources>

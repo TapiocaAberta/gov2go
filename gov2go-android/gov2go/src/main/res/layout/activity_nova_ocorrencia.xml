@@ -1,0 +1,82 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="org.transparencia.gov2go.activity.NovaOcorrenciaActivity">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp"
+        android:stretchColumns="*">
+
+        <TextView
+            android:id="@+id/id_tipoOcorrencia"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/cinza_escuro"
+            android:layout_marginBottom="10dp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="@string/imagem"
+            android:textColor="@color/cinza_escuro"
+            android:layout_marginBottom="10dp"
+            android:textStyle="bold"/>
+
+        <ImageView
+            android:id="@+id/nova_foto"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shapetextview_branco"
+            android:clickable="true"
+            android:src="@drawable/ic_camera_outline"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="@string/imagem"
+            android:textAlignment="center"
+            android:onClick="pegarFoto"/>
+
+        <EditText
+            android:id="@+id/titulo"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="@string/titulo"
+            android:textColor="@color/cinza_escuro"/>
+
+        <EditText
+            android:id="@+id/textoMensagem"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="@string/mensagem_ocorrencia"
+            android:lines="3"
+            android:singleLine="false"
+            android:textColor="@color/cinza_escuro"/>
+
+        <Button
+            android:id="@+id/botaoEnviar"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="enviarOcorrencia"
+            android:text="@string/enviar"
+            android:textColor="@color/cinza_escuro" />
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="@string/mensagem"
+            android:drawableLeft="@drawable/ic_gpspin"
+            android:textStyle="bold"/>
+
+    </TableLayout>
+
+</ScrollView>
