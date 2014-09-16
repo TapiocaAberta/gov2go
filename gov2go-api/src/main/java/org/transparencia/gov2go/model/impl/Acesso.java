@@ -4,11 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import org.transparencia.gov2go.model.Modelo;
+import org.transparencia.gov2go.model.ModelDefault;
 
 @Entity
 @Table(name = "acessos")
-public class Acesso extends Modelo {
+public class Acesso extends ModelDefault {
 
 	private static final long serialVersionUID = 1L;
 	

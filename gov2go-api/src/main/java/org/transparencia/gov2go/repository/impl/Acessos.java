@@ -1,11 +1,11 @@
-package org.transparencia.gov2go.dao.impl;
+package org.transparencia.gov2go.repository.impl;
 
 import javax.persistence.Query;
 
-import org.transparencia.gov2go.dao.Dao;
 import org.transparencia.gov2go.model.impl.Acesso;
+import org.transparencia.gov2go.repository.Repository;
 
-public class AcessoDao extends Dao<Acesso> {
+public class Acessos extends Repository<Acesso> {
 
 	@Override
 	protected Class<Acesso> retornaTipo() {

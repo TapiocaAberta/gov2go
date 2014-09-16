@@ -1,4 +1,4 @@
-package org.transparencia.gov2go.dao;
+package org.transparencia.gov2go.repository;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import javax.persistence.criteria.CriteriaQuery;
 
 @Stateless
 @LocalBean
-public abstract class Dao<T> {
+public abstract class Repository<T> {
 	protected Class<T> tipo = retornaTipo();
 
 	@PersistenceContext(unitName = "gov2go-unit")

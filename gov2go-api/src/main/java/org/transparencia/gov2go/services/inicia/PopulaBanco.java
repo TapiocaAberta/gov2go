@@ -10,12 +10,12 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.transparencia.gov2go.constantes.Provedor;
 import org.transparencia.gov2go.constantes.TipoOcorrencia;
-import org.transparencia.gov2go.dao.impl.OcorrenciaDao;
-import org.transparencia.gov2go.dao.impl.UsuarioDao;
 import org.transparencia.gov2go.model.impl.Imagem;
 import org.transparencia.gov2go.model.impl.Localizacao;
 import org.transparencia.gov2go.model.impl.Ocorrencia;
 import org.transparencia.gov2go.model.impl.Usuario;
+import org.transparencia.gov2go.repository.impl.Ocorrencias;
+import org.transparencia.gov2go.repository.impl.Usuarios;
 
 /*
  * 	Classe para popular o Banco de Dados, e ter uma carga inicial
@@ -26,10 +26,10 @@ import org.transparencia.gov2go.model.impl.Usuario;
 public class PopulaBanco {
 	
 	@Inject
-	private UsuarioDao usuarioDao;
+	private Usuarios usuarioDao;
 	
 	@Inject
-	private OcorrenciaDao ocorrenciaDao;
+	private Ocorrencias ocorrenciaDao;
 	
 	@Inject
 	protected Logger log;

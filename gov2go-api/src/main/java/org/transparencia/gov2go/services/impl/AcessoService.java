@@ -5,13 +5,13 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.transparencia.gov2go.dao.impl.AcessoDao;
 import org.transparencia.gov2go.model.impl.Acesso;
+import org.transparencia.gov2go.repository.impl.Acessos;
 
 public class AcessoService {
 
 	@Inject
-	AcessoDao dao;
+	Acessos dao;
 	
 	public Response criar() {
 		

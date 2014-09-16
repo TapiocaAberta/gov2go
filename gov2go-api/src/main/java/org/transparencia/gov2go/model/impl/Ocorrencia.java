@@ -20,12 +20,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.transparencia.gov2go.constantes.StatusOcorrencia;
 import org.transparencia.gov2go.constantes.TipoOcorrencia;
-import org.transparencia.gov2go.model.Modelo;
+import org.transparencia.gov2go.model.ModelDefault;
 
 @Entity
 @Table(name = "ocorrencia")
 @XmlRootElement
-public class Ocorrencia extends Modelo {
+public class Ocorrencia extends ModelDefault {
 
 	private static final long serialVersionUID = 1L;
 	

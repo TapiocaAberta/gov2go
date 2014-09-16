@@ -8,12 +8,12 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
-import org.transparencia.gov2go.model.Modelo;
+import org.transparencia.gov2go.model.ModelDefault;
 
 @Entity
 @Table(name = "imagem")
 @XmlRootElement
-public class Imagem extends Modelo {
+public class Imagem extends ModelDefault {
 
 	private static final long serialVersionUID = 1L;
 	

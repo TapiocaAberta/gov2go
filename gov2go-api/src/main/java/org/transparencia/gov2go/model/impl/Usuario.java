@@ -10,12 +10,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
-import org.transparencia.gov2go.model.Modelo;
+import org.transparencia.gov2go.model.ModelDefault;
 
 @Entity
 @Table(name = "usuario")
 @XmlRootElement
-public class Usuario extends Modelo {
+public class Usuario extends ModelDefault {
 	
 	private static final long serialVersionUID = 1L;
 	

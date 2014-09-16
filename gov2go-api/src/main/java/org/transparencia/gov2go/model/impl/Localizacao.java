@@ -11,12 +11,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.transparencia.gov2go.constantes.Provedor;
-import org.transparencia.gov2go.model.Modelo;
+import org.transparencia.gov2go.model.ModelDefault;
 
 @Entity
 @Table(name = "localizacao")
 @XmlRootElement
-public class Localizacao extends Modelo {
+public class Localizacao extends ModelDefault {
 
 	private static final long serialVersionUID = 1L;
 

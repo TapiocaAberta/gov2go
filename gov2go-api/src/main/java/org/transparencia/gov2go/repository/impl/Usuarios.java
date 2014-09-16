@@ -1,13 +1,13 @@
-package org.transparencia.gov2go.dao.impl;
+package org.transparencia.gov2go.repository.impl;
 
 import java.util.List;
 
 import javax.persistence.Query;
 
-import org.transparencia.gov2go.dao.Dao;
 import org.transparencia.gov2go.model.impl.Usuario;
+import org.transparencia.gov2go.repository.Repository;
 
-public class UsuarioDao extends Dao<Usuario> {
+public class Usuarios extends Repository<Usuario> {
 
 	@Override
 	protected Class<Usuario> retornaTipo() {

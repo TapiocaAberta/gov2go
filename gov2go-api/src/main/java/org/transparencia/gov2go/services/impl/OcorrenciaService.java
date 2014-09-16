@@ -8,19 +8,19 @@ import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 import org.slf4j.Logger;
-import org.transparencia.gov2go.dao.impl.OcorrenciaDao;
-import org.transparencia.gov2go.dao.impl.UsuarioDao;
 import org.transparencia.gov2go.model.impl.Ocorrencia;
 import org.transparencia.gov2go.model.impl.Usuario;
+import org.transparencia.gov2go.repository.impl.Ocorrencias;
+import org.transparencia.gov2go.repository.impl.Usuarios;
 import org.transparencia.gov2go.services.Service;
 
 public class OcorrenciaService implements Service <Ocorrencia>{
 
 	@Inject
-	OcorrenciaDao ocorrenciaDao;
+	Ocorrencias ocorrenciaDao;
 	
 	@Inject
-	UsuarioDao usuarioDao;
+	Usuarios usuarioDao;
 	
 	@Inject
 	Logger log;

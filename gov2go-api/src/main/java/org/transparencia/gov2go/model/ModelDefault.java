@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 @MappedSuperclass
-public class Modelo implements Serializable {
+public class ModelDefault implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
