@@ -30,7 +30,7 @@ public class UsuarioService implements Service <Usuario>{
 				return Response.ok().build();
 			}
 			
-			usuarioDao.salvar(entidade);
+			usuarioDao.novo(entidade);
 		} catch (Exception e) {
 			log.error("Erro ao criar novo usuario: " + e.getMessage());
 			e.printStackTrace();
@@ -45,7 +45,7 @@ public class UsuarioService implements Service <Usuario>{
 		
 		Usuario usuario = null;
 		try {
-			usuario = usuarioDao.buscarPorId(id);
+			usuario = usuarioDao.comID(id);
 		} catch (Exception e) {
 			log.error("Erro ao Buscar usuario por ID: " + e.getMessage());
 		}
@@ -58,7 +58,7 @@ public class UsuarioService implements Service <Usuario>{
 		
 		List<Usuario> todos = null;
 		try {
-			todos = usuarioDao.buscaTodos();
+			todos = usuarioDao.todos();
 		} catch (Exception e) {
 			log.error("Erro ao listar usuarios: " + e.getMessage());
 		}

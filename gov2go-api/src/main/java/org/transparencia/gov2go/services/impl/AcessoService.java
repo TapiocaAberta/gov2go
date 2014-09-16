@@ -11,7 +11,7 @@ import org.transparencia.gov2go.repository.impl.Acessos;
 public class AcessoService {
 
 	@Inject
-	Acessos dao;
+	Acessos acessos;
 	
 	public Response criar() {
 		
@@ -21,12 +21,23 @@ public class AcessoService {
 		acesso.setToken(token);
 		
 		try {
-			dao.salvar(acesso);
+			acessos.novo(acesso);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		return Response.status(Status.OK).entity(acesso).build();
+	}
+	
+	public boolean acessoPermitido(String token) {
+		boolean result = false;
+
+		Acesso acesso = acessos.comToken(token);
+
+		if (acesso != null)
+			result = true;
+
+		return result;
 	}
 	
 }

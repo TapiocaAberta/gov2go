@@ -38,10 +38,10 @@ public class PopulaBanco {
 	public void popula () {
 		try {
 			Usuario usuario = criaUsuario();
-			usuarioDao.salvar(usuario);
+			usuarioDao.novo(usuario);
 			
 			Ocorrencia ocorrencia = geraOcorrencias();
-			ocorrenciaDao.salvar(ocorrencia);
+			ocorrenciaDao.novo(ocorrencia);
 			
 		} catch (Exception e) {
 			log.info("Erro no Processo de preenchimento do Banco: " + e.getMessage());
@@ -53,7 +53,7 @@ public class PopulaBanco {
 	
 	protected Ocorrencia geraOcorrencias() throws Exception {
 		
-		Usuario usuario = usuarioDao.buscaTodos().get(0);
+		Usuario usuario = usuarioDao.todos().get(0);
 		
 		Imagem imagem = new Imagem();
 		imagem.setImagem("Simulando uma imagem :D");

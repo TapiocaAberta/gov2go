@@ -9,11 +9,6 @@ import org.transparencia.gov2go.repository.Repository;
 
 public class Usuarios extends Repository<Usuario> {
 
-	@Override
-	protected Class<Usuario> retornaTipo() {
-		return Usuario.class;
-	}
-
 	public Usuario buscaPorEmail(String email) {
 		String jpql = "select a from Usuario a where a.email = :parametro";
 

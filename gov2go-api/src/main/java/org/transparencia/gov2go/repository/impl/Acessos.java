@@ -7,12 +7,7 @@ import org.transparencia.gov2go.repository.Repository;
 
 public class Acessos extends Repository<Acesso> {
 
-	@Override
-	protected Class<Acesso> retornaTipo() {
-		return Acesso.class;
-	}
-
-	public Acesso buscarPorToken(String token) {
+	public Acesso comToken(String token) {
 		String jpql = "select a from Acesso a where a.token = :parametro";
 
 		Query query = em.createQuery(jpql, Acesso.class);
@@ -22,17 +17,6 @@ public class Acessos extends Repository<Acesso> {
 		acesso = (Acesso) query.getSingleResult();
 
 		return acesso;
-	}
-
-	public boolean acessoPermitido(String token) {
-		boolean result = false;
-
-		Acesso acesso = buscarPorToken(token);
-
-		if (acesso != null)
-			result = true;
-
-		return result;
 	}
 
 }

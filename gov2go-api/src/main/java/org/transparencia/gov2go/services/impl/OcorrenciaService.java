@@ -31,7 +31,7 @@ public class OcorrenciaService implements Service <Ocorrencia>{
 		try {
 			Usuario usuario = usuarioDao.buscaPorEmail(entidade.getUsuario().getEmail());
 			entidade.setUsuario(usuario);
-			ocorrenciaDao.salvar(entidade);
+			ocorrenciaDao.novo(entidade);
 			
 		} catch (Exception e) {
 			log.error("Erro ao criar nova ocorrencia: " + e.getMessage());
@@ -48,7 +48,7 @@ public class OcorrenciaService implements Service <Ocorrencia>{
 		
 		Ocorrencia ocorrencia = null;
 		try {
-			ocorrencia = ocorrenciaDao.buscarPorId(id);
+			ocorrencia = ocorrenciaDao.comID(id);
 		} catch (Exception e) {
 			log.error("Erro ao Buscar ocorrencia por ID: " + e.getMessage());
 		}
@@ -61,7 +61,7 @@ public class OcorrenciaService implements Service <Ocorrencia>{
 		
 		List<Ocorrencia> todos = null;
 		try {
-			todos = ocorrenciaDao.buscaTodos();
+			todos = ocorrenciaDao.todos();
 		} catch (Exception e) {
 			log.error("Erro ao listar usuarios: " + e.getMessage());
 		}
