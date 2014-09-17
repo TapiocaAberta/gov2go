@@ -1,6 +1,7 @@
-package org.transparencia.gov2go.services.inicia;
+package org.transparencia.gov2go.inicia;
 
-import java.util.Date;
+import java.io.InputStream;
+import java.time.LocalDate;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -26,10 +27,10 @@ import org.transparencia.gov2go.repository.impl.Usuarios;
 public class PopulaBanco {
 	
 	@Inject
-	private Usuarios usuarioDao;
+	private Usuarios usuarios;
 	
 	@Inject
-	private Ocorrencias ocorrenciaDao;
+	private Ocorrencias ocorrencias;
 	
 	@Inject
 	protected Logger log;
@@ -38,10 +39,10 @@ public class PopulaBanco {
 	public void popula () {
 		try {
 			Usuario usuario = criaUsuario();
-			usuarioDao.novo(usuario);
+			usuarios.novo(usuario);
 			
 			Ocorrencia ocorrencia = geraOcorrencias();
-			ocorrenciaDao.novo(ocorrencia);
+			ocorrencias.novo(ocorrencia);
 			
 		} catch (Exception e) {
 			log.info("Erro no Processo de preenchimento do Banco: " + e.getMessage());
@@ -53,10 +54,16 @@ public class PopulaBanco {
 	
 	protected Ocorrencia geraOcorrencias() throws Exception {
 		
-		Usuario usuario = usuarioDao.todos().get(0);
+		Usuario usuario = usuarios.todos().get(0);
+		
+		InputStream is = PopulaBanco.class.getResourceAsStream("/pichado.jpg");
+		byte[] foto = new byte[is.available()];
+		
+		is.read(foto);
+		is.close();
 		
 		Imagem imagem = new Imagem();
-		imagem.setImagem("Simulando uma imagem :D");
+		imagem.setImagem(foto);
 		
 		Localizacao localizacao = new Localizacao();
 		localizacao.setLatitude("123.012");
@@ -71,7 +78,7 @@ public class PopulaBanco {
 		ocorrencia.setImagem(imagem);
 		ocorrencia.setLocalizacao(localizacao);
 		ocorrencia.setTipoOcorrencia(TipoOcorrencia.LIMPEZA_URBANA);
-		ocorrencia.setDataCriacaoOcorrencia(new Date());
+		ocorrencia.setDataCriacaoOcorrencia(LocalDate.now());
 		
 		return ocorrencia;
 	}

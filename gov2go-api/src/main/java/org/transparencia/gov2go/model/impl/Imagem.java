@@ -1,42 +1,42 @@
 package org.transparencia.gov2go.model.impl;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.transparencia.gov2go.model.ModelDefault;
 
 @Entity
 @Table(name = "imagem")
-@XmlRootElement
 public class Imagem extends ModelDefault {
 
 	private static final long serialVersionUID = 1L;
 	
 	public Imagem () {}
 	
-	public Imagem (String imagem) {
+	public Imagem (byte[] imagem) {
 		this.imagem = imagem;
 	}
 	
-	
-	@Column
-	private String imagem;
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	private byte[] imagem;
 	
 	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	private Ocorrencia ocorrencia;
 
 	
-	public String getImagem() {
+	public byte[] getImagem() {
 		return imagem;
 	}
 	
-	public void setImagem(String imagem) {
+	public void setImagem(byte[] imagem) {
 		this.imagem = imagem;
 	}
 

@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
@@ -14,7 +13,6 @@ import org.transparencia.gov2go.model.ModelDefault;
 
 @Entity
 @Table(name = "usuario")
-@XmlRootElement
 public class Usuario extends ModelDefault {
 	
 	private static final long serialVersionUID = 1L;

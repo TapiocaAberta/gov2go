@@ -2,7 +2,7 @@ package org.transparencia.gov2go.model.impl;
 
 import static org.transparencia.gov2go.model.constantes.StatusOcorrencia.ABERTA;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,18 +13,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.transparencia.gov2go.model.ModelDefault;
 import org.transparencia.gov2go.model.constantes.StatusOcorrencia;
 import org.transparencia.gov2go.model.constantes.TipoOcorrencia;
+import org.transparencia.gov2go.util.rest.JsonLocalDateSerializer;
 
 @Entity
 @Table(name = "ocorrencia")
-@XmlRootElement
 public class Ocorrencia extends ModelDefault {
 
 	private static final long serialVersionUID = 1L;
@@ -40,10 +38,10 @@ public class Ocorrencia extends ModelDefault {
 		this.tipoOcorrencia = tipoOcorrencia;
 	}
 	
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "data_criacao_ocorrencia", nullable = false)
-	@JsonProperty("dataOcorrencia")
-	private Date dataCriacaoOcorrencia;
+	@JsonProperty("dataOcorrencia") 
+	@JsonSerialize(using = JsonLocalDateSerializer.class)
+	private LocalDate dataCriacaoOcorrencia;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
@@ -119,11 +117,11 @@ public class Ocorrencia extends ModelDefault {
 		this.tipoOcorrencia = tipoOcorrencia;
 	}
 
-	public Date getDataCriacaoOcorrencia() {
+	public LocalDate getDataCriacaoOcorrencia() {
 		return dataCriacaoOcorrencia;
 	}
 
-	public void setDataCriacaoOcorrencia(Date dataCriacaoOcorrencia) {
+	public void setDataCriacaoOcorrencia(LocalDate dataCriacaoOcorrencia) {
 		this.dataCriacaoOcorrencia = dataCriacaoOcorrencia;
 	}
 

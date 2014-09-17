@@ -7,7 +7,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.transparencia.gov2go.model.ModelDefault;
@@ -15,7 +14,6 @@ import org.transparencia.gov2go.model.constantes.Provedor;
 
 @Entity
 @Table(name = "localizacao")
-@XmlRootElement
 public class Localizacao extends ModelDefault {
 
 	private static final long serialVersionUID = 1L;
