@@ -1,6 +1,6 @@
 package org.transparencia.gov2go.model.impl;
 
-import static org.transparencia.gov2go.constantes.StatusOcorrencia.ABERTA;
+import static org.transparencia.gov2go.model.constantes.StatusOcorrencia.ABERTA;
 
 import java.util.Date;
 
@@ -18,9 +18,9 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.annotate.JsonProperty;
-import org.transparencia.gov2go.constantes.StatusOcorrencia;
-import org.transparencia.gov2go.constantes.TipoOcorrencia;
 import org.transparencia.gov2go.model.ModelDefault;
+import org.transparencia.gov2go.model.constantes.StatusOcorrencia;
+import org.transparencia.gov2go.model.constantes.TipoOcorrencia;
 
 @Entity
 @Table(name = "ocorrencia")

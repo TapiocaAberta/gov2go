@@ -80,7 +80,7 @@ public class UsuarioService implements Service <Usuario>{
 	}
 
 	protected boolean usuarioExiste( String email ) {
-		Usuario usuario = usuarioDao.buscaPorEmail(email);
+		Usuario usuario = usuarioDao.comEmail(email);
 		return usuario != null;
 	}
 	

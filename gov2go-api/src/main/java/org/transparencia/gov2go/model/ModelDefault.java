@@ -1,15 +1,13 @@
 package org.transparencia.gov2go.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -29,9 +27,8 @@ public class ModelDefault implements Serializable {
 	private boolean ativo = true;
 	
 	@JsonIgnore
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "data_criacao", nullable = false)
-	private Date dataCriacao = new Date();
+	private LocalDateTime dataCriacao = LocalDateTime.now();
 
 	public Long getId() {
 		return id;
@@ -45,11 +42,11 @@ public class ModelDefault implements Serializable {
 		this.ativo = ativo;
 	}
 
-	public Date getDataCriacao() {
+	public LocalDateTime getDataCriacao() {
 		return dataCriacao;
 	}
 
-	public void setDataCriacao(Date dataCriacao) {
+	public void setDataCriacao(LocalDateTime dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
 

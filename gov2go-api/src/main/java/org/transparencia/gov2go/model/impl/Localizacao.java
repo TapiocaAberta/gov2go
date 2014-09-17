@@ -10,8 +10,8 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
-import org.transparencia.gov2go.constantes.Provedor;
 import org.transparencia.gov2go.model.ModelDefault;
+import org.transparencia.gov2go.model.constantes.Provedor;
 
 @Entity
 @Table(name = "localizacao")

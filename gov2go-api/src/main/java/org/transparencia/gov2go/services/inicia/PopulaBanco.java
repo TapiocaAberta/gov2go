@@ -8,8 +8,8 @@ import javax.ejb.Startup;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
-import org.transparencia.gov2go.constantes.Provedor;
-import org.transparencia.gov2go.constantes.TipoOcorrencia;
+import org.transparencia.gov2go.model.constantes.Provedor;
+import org.transparencia.gov2go.model.constantes.TipoOcorrencia;
 import org.transparencia.gov2go.model.impl.Imagem;
 import org.transparencia.gov2go.model.impl.Localizacao;
 import org.transparencia.gov2go.model.impl.Ocorrencia;

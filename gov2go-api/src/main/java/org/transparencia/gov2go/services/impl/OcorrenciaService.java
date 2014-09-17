@@ -29,7 +29,7 @@ public class OcorrenciaService implements Service <Ocorrencia>{
 	public Response criar(Ocorrencia entidade) {
 		
 		try {
-			Usuario usuario = usuarioDao.buscaPorEmail(entidade.getUsuario().getEmail());
+			Usuario usuario = usuarioDao.comEmail(entidade.getUsuario().getEmail());
 			entidade.setUsuario(usuario);
 			ocorrenciaDao.novo(entidade);
 			

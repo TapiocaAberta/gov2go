@@ -1,4 +1,4 @@
-package org.transparencia.gov2go.constantes;
+package org.transparencia.gov2go.model.constantes;
 
 public enum StatusOcorrencia {
 	ABERTA, 
