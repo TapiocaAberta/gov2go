@@ -4,8 +4,6 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaQuery;
@@ -16,28 +14,27 @@ public abstract class Repository<T> {
 	protected Class<T> tipo = retornaTipo();
 
 	@PersistenceContext(unitName = "gov2go-unit")
-	protected static EntityManager em;
+	protected EntityManager em;
 
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void novo(T entidade) throws Exception {
+	public void novo(T entidade) {
 		em.persist(entidade);
 	}
 
-	public void remover(T entidade) throws Exception {
+	public void remover(T entidade) {
 		em.remove(entidade);
 	}
 
-	public List<T> todos() throws Exception {
+	public List<T> todos() {
 		CriteriaQuery<Object> cq = em.getCriteriaBuilder().createQuery();
 		cq.select(cq.from(tipo));
 		return (List<T>) em.createQuery(cq).getResultList();
 	}
 
-	public T comID(long id) throws Exception {
+	public T comID(long id) {
 		return em.find(tipo, id);
 	}
 
-	public T atualizar(T entidade) throws Exception {
+	public T atualizar(T entidade) {
 		return em.merge(entidade);
 	}
 

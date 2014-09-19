@@ -60,7 +60,7 @@ public class Ocorrencia extends ModelDefault {
 	@JoinColumn(nullable = false)
 	private Localizacao localizacao;
 	
-	@OneToOne(mappedBy = "ocorrencia", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "ocorrencia", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Imagem imagem;
 	
 	@Enumerated (EnumType.STRING)

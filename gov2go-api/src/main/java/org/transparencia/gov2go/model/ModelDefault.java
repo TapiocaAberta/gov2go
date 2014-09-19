@@ -19,7 +19,6 @@ public class ModelDefault implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", nullable = false, updatable = false)
-	@JsonIgnore
 	private Long id;
 	
 	@JsonIgnore

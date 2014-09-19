@@ -1,5 +1,8 @@
 package org.transparencia.gov2go.inicia;
 
+import static org.transparencia.gov2go.model.constantes.Provedor.NETWORK;
+import static org.transparencia.gov2go.model.constantes.TipoOcorrencia.LIMPEZA_URBANA;
+
 import java.io.InputStream;
 import java.time.LocalDate;
 
@@ -9,8 +12,6 @@ import javax.ejb.Startup;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
-import org.transparencia.gov2go.model.constantes.Provedor;
-import org.transparencia.gov2go.model.constantes.TipoOcorrencia;
 import org.transparencia.gov2go.model.impl.Imagem;
 import org.transparencia.gov2go.model.impl.Localizacao;
 import org.transparencia.gov2go.model.impl.Ocorrencia;
@@ -64,20 +65,23 @@ public class PopulaBanco {
 		
 		Imagem imagem = new Imagem();
 		imagem.setImagem(foto);
+		imagem.setExtensao(".jpg");
+		imagem.setMimeType("image/jpg");
+		imagem.setNome("ocorrencia_2_" + LIMPEZA_URBANA.toString());
 		
 		Localizacao localizacao = new Localizacao();
 		localizacao.setLatitude("123.012");
 		localizacao.setLongitude("-54.092");
-		localizacao.setProvedor(Provedor.NETWORK);
+		localizacao.setProvedor(NETWORK);
 		
 		
 		Ocorrencia ocorrencia = new Ocorrencia();
 		ocorrencia.setDescricao("Problemas com pichação");
 		ocorrencia.setTitulo("Problemas no Galo Branco");
 		ocorrencia.setUsuario(usuario);
-		ocorrencia.setImagem(imagem);
+//		ocorrencia.setImagem(imagem);
 		ocorrencia.setLocalizacao(localizacao);
-		ocorrencia.setTipoOcorrencia(TipoOcorrencia.LIMPEZA_URBANA);
+		ocorrencia.setTipoOcorrencia(LIMPEZA_URBANA);
 		ocorrencia.setDataCriacaoOcorrencia(LocalDate.now());
 		
 		return ocorrencia;

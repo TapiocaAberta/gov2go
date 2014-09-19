@@ -1,7 +1,7 @@
 package org.transparencia.gov2go.model.impl;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Lob;
@@ -23,12 +23,21 @@ public class Imagem extends ModelDefault {
 		this.imagem = imagem;
 	}
 	
+	@Column(nullable = false)
+	private String mimeType;
+	
+	@Column(nullable = false)
+	private String nome;
+	
+	@Column(nullable = false)
+	private String extensao;
+	
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
 	private byte[] imagem;
 	
 	@JsonIgnore
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	private Ocorrencia ocorrencia;
 
 	
@@ -46,6 +55,30 @@ public class Imagem extends ModelDefault {
 
 	public void setOcorrencia(Ocorrencia ocorrenia) {
 		this.ocorrencia = ocorrenia;
+	}
+
+	public String getExtensao() {
+		return extensao;
+	}
+
+	public void setExtensao(String extensao) {
+		this.extensao = extensao;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getMimeType() {
+		return mimeType;
+	}
+
+	public void setMimeType(String mimeType) {
+		this.mimeType = mimeType;
 	}
 
 }

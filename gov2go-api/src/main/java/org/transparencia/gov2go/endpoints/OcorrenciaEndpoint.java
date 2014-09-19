@@ -1,6 +1,6 @@
 package org.transparencia.gov2go.endpoints;
 
-import javax.ejb.Stateless;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -8,12 +8,12 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.transparencia.gov2go.model.impl.Ocorrencia;
 
-@Stateless
 @Path("ocorrencia")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -31,6 +31,17 @@ public interface OcorrenciaEndpoint {
 
 	@PUT
 	@Path("/{id:[0-9][0-9]*}")
-	public void atualizar(@PathParam("id") Long id, Ocorrencia entidade);
+	public Response atualizar(@PathParam("id") Long id, Ocorrencia entidade);
+	
+	@GET
+	@Path("/{id:[0-9][0-9]*}/imagem")
+	@Produces("image/*")
+	public Response buscaImagemParaOcorrencia(@PathParam("id") Long id);
+	
+	@POST
+	@Path("/{id:[0-9][0-9]*}/imagem")
+	@Consumes("image/*")
+	public Response addImagemParaOcorrencia(@PathParam("id") Long id, 
+										    @Context HttpServletRequest request, byte[] imagem);
 
 }
