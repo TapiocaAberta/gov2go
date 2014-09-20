@@ -1,8 +1,6 @@
 package org.transparencia.gov2go.services.impl;
 
-import static org.transparencia.gov2go.services.util.ServiceUtil.retorna404SeEhNulo;
-
-import java.util.List;
+import static javax.ws.rs.core.Response.Status.CONFLICT;
 
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
@@ -15,7 +13,7 @@ import org.transparencia.gov2go.services.Service;
 public class UsuarioService implements Service <Usuario>{
 
 	@Inject
-	private Usuarios usuarioDao;
+	private Usuarios usuarios;
 	
 	@Inject
 	Logger log;
@@ -23,64 +21,40 @@ public class UsuarioService implements Service <Usuario>{
 	@Override
 	public Response criar(Usuario entidade) {
 		
-		try {
-			
-			if(usuarioExiste(entidade.getEmail())) {
-				log.info("Usuario: " + entidade.getEmail() + " existe!");
-				return Response.ok().build();
-			}
-			
-			usuarioDao.novo(entidade);
-		} catch (Exception e) {
-			log.error("Erro ao criar novo usuario: " + e.getMessage());
-			e.printStackTrace();
-			return Response.serverError().build();
+		if (usuarioExiste(entidade.getEmail())) {
+			log.info("Usuario: " + entidade.getEmail() + " existe!");
+			return Response.status(CONFLICT).build();
 		}
-		
+
+		usuarios.novo(entidade);
 		return Response.ok().build();
 	}
 
 	@Override
 	public Response buscarPorId(Long id) {
-		
-		Usuario usuario = null;
-		try {
-			usuario = usuarioDao.comID(id);
-		} catch (Exception e) {
-			log.error("Erro ao Buscar usuario por ID: " + e.getMessage());
-		}
-		
-		return retorna404SeEhNulo(usuario);
+		Usuario usuario = lanca404SeNulo( usuarios.comID(id) );
+		return Response.ok(usuario).build();
 	}
 
 	@Override
 	public Response listarTodos() {
-		
-		List<Usuario> todos = null;
-		try {
-			todos = usuarioDao.todos();
-		} catch (Exception e) {
-			log.error("Erro ao listar usuarios: " + e.getMessage());
-		}
-		
-		return retorna404SeEhNulo(todos);
+		return Response.ok( usuarios.todos() ).build();
 	}
 
 	@Override
 	public Response atualizar(Long id, Usuario entidade) {
-		
-		Usuario usuario = null;
-		try {
-			usuario = usuarioDao.atualizar(entidade);
-		} catch (Exception e) {
-			log.error("Erro ao atualizar usuario: " + e.getMessage());
-		}
-		
-		return retorna404SeEhNulo(usuario);
+		lanca404SeNulo( usuarios.comID(id) );
+		entidade.setId(id);
+		return Response.ok(entidade).build();
+	}
+	
+	public Response buscaUsuarioComEmail(String email) {
+		Usuario usuario = lanca404SeNulo( usuarios.comEmail(email) );
+		return Response.ok(usuario).build();
 	}
 
 	protected boolean usuarioExiste( String email ) {
-		Usuario usuario = usuarioDao.comEmail(email);
+		Usuario usuario = usuarios.comEmail(email);
 		return usuario != null;
 	}
 	

@@ -1,13 +1,10 @@
 package org.transparencia.gov2go.services.impl;
 
-import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import static org.transparencia.gov2go.model.constantes.ExtensoesArquivo.EXTENSOES;
-import static org.transparencia.gov2go.services.util.ServiceUtil.retorna404SeEhNulo;
 
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
@@ -36,83 +33,43 @@ public class OcorrenciaService implements Service <Ocorrencia>{
 	Logger log;
 	
 	@Override
-	public Response criar(Ocorrencia entidade) {
-		
-		try {
-			Usuario usuario = usuarios.comEmail(entidade.getUsuario().getEmail());
-			entidade.setUsuario(usuario);
-			ocorrencias.novo(entidade);
-			
-		} catch (Exception e) {
-			log.error("Erro ao criar nova ocorrencia: " + e.getMessage());
-			e.printStackTrace();
-			return Response.serverError().build();
-		}
-		
+	public Response criar(Ocorrencia ocorrencia) {
+		Usuario usuario = usuarios.comEmail(ocorrencia.getUsuario().getEmail()); //TODO: Precisa Disso????? Verificar isto Oo Ta Zuado :(
+		lanca404SeNulo(usuario);
+		ocorrencia.setUsuario(usuario);
+		ocorrencias.novo(ocorrencia);
 		return Response.ok().build();
 		
 	}
 
 	@Override
 	public Response buscarPorId(Long id) {
-		
-		Ocorrencia ocorrencia = null;
-		try {
-			ocorrencia = ocorrencias.comID(id);
-		} catch (Exception e) {
-			log.error("Erro ao Buscar ocorrencia por ID: " + e.getMessage());
-		}
-		
-		return retorna404SeEhNulo(ocorrencia);
+		Ocorrencia ocorrencia = ocorrencias.comID(id);
+		return Response.ok( lanca404SeNulo(ocorrencia) ).build();
 	}
 
 	@Override
 	public Response listarTodos() {
-		
-		List<Ocorrencia> todos = null;
-		try {
-			todos = ocorrencias.todos();
-		} catch (Exception e) {
-			log.error("Erro ao listar usuarios: " + e.getMessage());
-		}
-		
-		return retorna404SeEhNulo(todos);
+		List<Ocorrencia> todos = ocorrencias.todos();
+		return Response.ok(todos).build();
 	}
 
 	@Override
 	public Response atualizar(Long id, Ocorrencia entidade) {
-		
-		Ocorrencia ocorrencia = null;
-		try {
-			ocorrencia = ocorrencias.atualizar(entidade);
-		} catch (Exception e) {
-			log.error("Erro ao atualizar usuario: " + e.getMessage());
-		}
-		
-		return retorna404SeEhNulo(ocorrencia);
+		lanca404SeNulo(ocorrencias.comID(id));
+		entidade.setId(id);
+		return Response.ok(ocorrencias.atualizar(entidade)).build();
 	}
 	
 	public Response imagemParaOcorrenciaComID(Long id) {
-		
-		Ocorrencia ocorrencia = ocorrencias.comID(id);
-		
-		if ( ocorrencia == null )
-			throw new WebApplicationException(Response.status(NOT_FOUND).build());
-		
-		Imagem imagem = imagens.paraOcorrenciaComID(id);
-		
-		if(imagem == null)
-			throw new WebApplicationException(Response.status(NOT_FOUND).build());
-		
+		lanca404SeNulo( ocorrencias.comID(id) );
+		Imagem imagem = lanca404SeNulo(imagens.paraOcorrenciaComID(id));
 		return Response.ok(imagem.getImagem()).type(imagem.getMimeType()).build();
 	}
 	
 	public Response novaImagemParaOcorrenciaComID(Long id, byte[] dados, String mimeType) {
 		
-		Ocorrencia ocorrencia = ocorrencias.comID(id);
-		
-		if ( ocorrencia == null )
-			throw new WebApplicationException(Response.status(NOT_FOUND).build());
+		Ocorrencia ocorrencia = lanca404SeNulo( ocorrencias.comID(id) );
 		
 		Imagem imagem = new Imagem();
 		
