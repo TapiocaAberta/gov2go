@@ -10,18 +10,13 @@ import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.transparencia.gov2go.model.ModelDefault;
+import org.transparencia.gov2go.model.builder.ImagemBuilder;
 
 @Entity
 @Table(name = "imagem")
 public class Imagem extends ModelDefault {
 
 	private static final long serialVersionUID = 1L;
-	
-	public Imagem () {}
-	
-	public Imagem (byte[] imagem) {
-		this.imagem = imagem;
-	}
 	
 	@Column(nullable = false)
 	private String mimeType;
@@ -39,7 +34,14 @@ public class Imagem extends ModelDefault {
 	@JsonIgnore
 	@OneToOne
 	private Ocorrencia ocorrencia;
+	
+	public static ImagemBuilder comFoto (byte[] foto) {
+		return new ImagemBuilder(foto);
+	}
 
+	public static ImagemBuilder newImagem () {
+		return new ImagemBuilder();
+	}
 	
 	public byte[] getImagem() {
 		return imagem;

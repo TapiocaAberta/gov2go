@@ -1,6 +1,6 @@
 package org.transparencia.gov2go.model.constantes;
 
-public enum TipoOcorrencia {
+public enum Tipo {
 	ILUMINACAO_PUBLICA,
 	SINAL_TRANSITO,
 	BURACO_VIAS,

@@ -71,13 +71,12 @@ public class OcorrenciaService implements Service <Ocorrencia>{
 		
 		Ocorrencia ocorrencia = lanca404SeNulo( ocorrencias.comID(id) );
 		
-		Imagem imagem = new Imagem();
-		
-		imagem.setImagem(dados);
-		imagem.setNome("ocorrencia_" + id + "_" + ocorrencia.getTipoOcorrencia().toString());
-		imagem.setMimeType(mimeType);
-		imagem.setExtensao(EXTENSOES.get(mimeType));
-		imagem.setOcorrencia(ocorrencia);
+		Imagem imagem = Imagem.comFoto(dados).
+								comNome("ocorrencia_" + id + "_" + ocorrencia.getTipo().toString()).
+								comMimeType(mimeType).
+								comExtensao(EXTENSOES.get(mimeType)).
+								paraOcorrencia(ocorrencia).
+								build();
 		
 		ocorrencia.setImagem(imagem);
 		ocorrencias.atualizar(ocorrencia);

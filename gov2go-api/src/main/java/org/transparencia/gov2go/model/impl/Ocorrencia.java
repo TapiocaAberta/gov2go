@@ -1,6 +1,8 @@
 package org.transparencia.gov2go.model.impl;
 
-import static org.transparencia.gov2go.model.constantes.StatusOcorrencia.ABERTA;
+import static org.transparencia.gov2go.model.constantes.Status.ABERTA;
+import static org.transparencia.gov2go.model.constantes.Status.ANDAMENTO;
+import static org.transparencia.gov2go.model.constantes.Status.FINALIZADA;
 
 import java.time.LocalDate;
 
@@ -17,8 +19,9 @@ import javax.persistence.Table;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.transparencia.gov2go.model.ModelDefault;
-import org.transparencia.gov2go.model.constantes.StatusOcorrencia;
-import org.transparencia.gov2go.model.constantes.TipoOcorrencia;
+import org.transparencia.gov2go.model.builder.OcorrenciaBuilder;
+import org.transparencia.gov2go.model.constantes.Status;
+import org.transparencia.gov2go.model.constantes.Tipo;
 import org.transparencia.gov2go.util.rest.JsonLocalDateSerializer;
 
 @Entity
@@ -27,25 +30,14 @@ public class Ocorrencia extends ModelDefault {
 
 	private static final long serialVersionUID = 1L;
 	
-	public Ocorrencia() {}
-	
-	public Ocorrencia(String titulo, String descricao, Usuario usuario, Localizacao localizacao, Imagem imagem, TipoOcorrencia tipoOcorrencia) {
-		this.titulo = titulo;
-		this.descricao = descricao;
-		this.usuario = usuario;
-		this.localizacao = localizacao;
-		this.imagem = imagem;
-		this.tipoOcorrencia = tipoOcorrencia;
-	}
-	
 	@Column(name = "data_criacao_ocorrencia", nullable = false)
-	@JsonProperty("dataOcorrencia") 
+	@JsonProperty("data") 
 	@JsonSerialize(using = JsonLocalDateSerializer.class)
 	private LocalDate dataCriacaoOcorrencia;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
-	private StatusOcorrencia status = ABERTA;
+	private Status status = ABERTA;
 
 	@Column
 	private String titulo;
@@ -56,7 +48,7 @@ public class Ocorrencia extends ModelDefault {
 	@ManyToOne
 	private Usuario usuario;
 	
-	@OneToOne(mappedBy = "ocorrencia", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "ocorrencia", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(nullable = false)
 	private Localizacao localizacao;
 	
@@ -65,7 +57,21 @@ public class Ocorrencia extends ModelDefault {
 	
 	@Enumerated (EnumType.STRING)
 	@Column(name = "tipo_ocorrencia", nullable = false)
-	private TipoOcorrencia tipoOcorrencia;
+	private Tipo tipo;
+	
+	public static OcorrenciaBuilder nova () {
+		return new OcorrenciaBuilder();
+	}
+	
+	public static OcorrenciaBuilder aberta () {
+		return new OcorrenciaBuilder(ABERTA);
+	}
+	public static OcorrenciaBuilder finalizada () {
+		return new OcorrenciaBuilder(FINALIZADA);
+	}
+	public static OcorrenciaBuilder andamento () {
+		return new OcorrenciaBuilder(ANDAMENTO);
+	}
 
 	public String getTitulo() {
 		return titulo;
@@ -109,27 +115,27 @@ public class Ocorrencia extends ModelDefault {
 		imagem.setOcorrencia(this);
 	}
 
-	public TipoOcorrencia getTipoOcorrencia() {
-		return tipoOcorrencia;
+	public Tipo getTipo() {
+		return tipo;
 	}
 
-	public void setTipoOcorrencia(TipoOcorrencia tipoOcorrencia) {
-		this.tipoOcorrencia = tipoOcorrencia;
+	public void setTipo(Tipo tipoOcorrencia) {
+		this.tipo = tipoOcorrencia;
 	}
 
 	public LocalDate getDataCriacaoOcorrencia() {
 		return dataCriacaoOcorrencia;
 	}
 
-	public void setDataCriacaoOcorrencia(LocalDate dataCriacaoOcorrencia) {
+	public void setDataOcorrencia(LocalDate dataCriacaoOcorrencia) {
 		this.dataCriacaoOcorrencia = dataCriacaoOcorrencia;
 	}
 
-	public StatusOcorrencia getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(StatusOcorrencia status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 

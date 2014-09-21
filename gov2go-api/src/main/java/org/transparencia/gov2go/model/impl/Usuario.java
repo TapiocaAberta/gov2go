@@ -10,6 +10,7 @@ import javax.persistence.Table;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 import org.transparencia.gov2go.model.ModelDefault;
+import org.transparencia.gov2go.model.builder.UsuarioBuilder;
 
 @Entity
 @Table(name = "usuario")
@@ -17,15 +18,7 @@ public class Usuario extends ModelDefault {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public Usuario() {}
-	
-	public Usuario(String nome, String email, List<Ocorrencia> ocorrencias) {
-		this.nome = nome;
-		this.email = email;
-		this.ocorrencias = ocorrencias;
-	}
-
-	@Column
+	@Column (nullable = false)
 	private String nome;
 	
 	@Email
@@ -35,6 +28,10 @@ public class Usuario extends ModelDefault {
 	@JsonIgnore
 	@OneToMany(mappedBy = "usuario")
 	private List<Ocorrencia> ocorrencias;
+	
+	public static UsuarioBuilder novo() {
+		return new UsuarioBuilder();
+	}
 
 	public String getNome() {
 		return nome;

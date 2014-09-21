@@ -1,6 +1,5 @@
 package org.transparencia.gov2go.model.impl;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,6 +9,7 @@ import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.transparencia.gov2go.model.ModelDefault;
+import org.transparencia.gov2go.model.builder.LocalizacaoBuilder;
 import org.transparencia.gov2go.model.constantes.Provedor;
 
 @Entity
@@ -17,14 +17,6 @@ import org.transparencia.gov2go.model.constantes.Provedor;
 public class Localizacao extends ModelDefault {
 
 	private static final long serialVersionUID = 1L;
-
-	public Localizacao () {}
-	
-	public Localizacao(String latitude, String longitude, Provedor provedor) {
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.provedor = provedor;
-	}
 
 	@Column(updatable = false, nullable = false)
 	private String latitude;
@@ -37,8 +29,16 @@ public class Localizacao extends ModelDefault {
 	private Provedor provedor;
 
 	@JsonIgnore
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	private Ocorrencia ocorrencia;
+	
+	public static LocalizacaoBuilder gps () {
+		return new LocalizacaoBuilder(Provedor.GPS);
+	}
+	
+	public static LocalizacaoBuilder nerwork () {
+		return new LocalizacaoBuilder(Provedor.NETWORK);
+	}
 
 	public String getLatitude() {
 		return latitude;

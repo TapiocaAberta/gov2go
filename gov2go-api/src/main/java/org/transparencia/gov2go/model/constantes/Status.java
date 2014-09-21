@@ -1,6 +1,6 @@
 package org.transparencia.gov2go.model.constantes;
 
-public enum StatusOcorrencia {
+public enum Status {
 	ABERTA, 
 	ANDAMENTO, 
 	FINALIZADA;

@@ -1,10 +1,9 @@
 package org.transparencia.gov2go.inicia;
 
-import static org.transparencia.gov2go.model.constantes.Provedor.NETWORK;
-import static org.transparencia.gov2go.model.constantes.TipoOcorrencia.LIMPEZA_URBANA;
+import static org.transparencia.gov2go.model.constantes.Tipo.LIMPEZA_URBANA;
 
+import java.io.IOException;
 import java.io.InputStream;
-import java.time.LocalDate;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -19,10 +18,12 @@ import org.transparencia.gov2go.model.impl.Usuario;
 import org.transparencia.gov2go.repository.impl.Ocorrencias;
 import org.transparencia.gov2go.repository.impl.Usuarios;
 
-/*
- * 	Classe para popular o Banco de Dados, e ter uma carga inicial
+/**
+ * 
+ * @author pedro-hos
+ * Apenas para dar Uma Carga Inicial
+ *
  */
-
 @Startup
 @Singleton
 public class PopulaBanco {
@@ -38,61 +39,70 @@ public class PopulaBanco {
 	
 	@PostConstruct
 	public void popula () {
-		try {
+		
+			log.info(" ###### Iniciando Processo de Popular Banco ###### ");
+			
+			log.info(" ###### Cadastro de Usuario ###### ");
 			Usuario usuario = criaUsuario();
 			usuarios.novo(usuario);
 			
+			log.info(" ###### Cadastro de Ocorrencia ###### ");
 			Ocorrencia ocorrencia = geraOcorrencias();
 			ocorrencias.novo(ocorrencia);
 			
-		} catch (Exception e) {
-			log.info("Erro no Processo de preenchimento do Banco: " + e.getMessage());
-			e.printStackTrace();
-		} finally {
-			log.info("Processo de preenchimento do Banco de Dados Completado");
-		}
 	}
 	
-	protected Ocorrencia geraOcorrencias() throws Exception {
+	protected Ocorrencia geraOcorrencias() {
 		
-		Usuario usuario = usuarios.todos().get(0);
+		Usuario usuario = usuarios.comEmail("pedro-hos@outlook.com");
 		
+		byte[] foto = null;
+		
+		try {
+			foto = getImage();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		Imagem imagem = Imagem.comFoto(foto)
+							  .comExtensao(".jpg")
+							  .comMimeType("image/jpg")
+							  .comNome("ocorrencia_2_" + LIMPEZA_URBANA.toString())
+							  .build();
+		
+		Localizacao localizacao = Localizacao.nerwork()
+											 .comLatitude("123.012")
+											 .comLongitude("-54.092")
+											 .build();
+		
+		Ocorrencia ocorrencia = Ocorrencia.aberta()
+										  .descricao("Problemas com pichação")
+										  .titulo("Problemas no Galo Branco")
+										  .doUsuario(usuario)
+										  .comFoto(imagem)
+										  .localizadoEm(localizacao)
+										  .doTipo(LIMPEZA_URBANA)
+										  .hoje()
+										  .build();
+		return ocorrencia;
+	}
+
+	private byte[] getImage() throws IOException {
 		InputStream is = PopulaBanco.class.getResourceAsStream("/pichado.jpg");
 		byte[] foto = new byte[is.available()];
 		
 		is.read(foto);
 		is.close();
 		
-		Imagem imagem = new Imagem();
-		imagem.setImagem(foto);
-		imagem.setExtensao(".jpg");
-		imagem.setMimeType("image/jpg");
-		imagem.setNome("ocorrencia_2_" + LIMPEZA_URBANA.toString());
-		
-		Localizacao localizacao = new Localizacao();
-		localizacao.setLatitude("123.012");
-		localizacao.setLongitude("-54.092");
-		localizacao.setProvedor(NETWORK);
-		
-		
-		Ocorrencia ocorrencia = new Ocorrencia();
-		ocorrencia.setDescricao("Problemas com pichação");
-		ocorrencia.setTitulo("Problemas no Galo Branco");
-		ocorrencia.setUsuario(usuario);
-//		ocorrencia.setImagem(imagem);
-		ocorrencia.setLocalizacao(localizacao);
-		ocorrencia.setTipoOcorrencia(LIMPEZA_URBANA);
-		ocorrencia.setDataCriacaoOcorrencia(LocalDate.now());
-		
-		return ocorrencia;
+		return foto;
 	}
 	
 	protected Usuario criaUsuario () {
 		
-		Usuario usuario = new Usuario();
-		usuario.setNome("Pedro Hos");
-		usuario.setEmail("pedrospsjc@gmail.com");
-		
+		Usuario usuario = Usuario.novo()
+								 .comEmail("pedro-hos@outlook.com")
+								 .comNome("Pedro Hos")
+								 .build();
 		return usuario;
 		
 	}
