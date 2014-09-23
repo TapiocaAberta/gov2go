@@ -9,6 +9,7 @@
 	<version>0.0.1</version>
 
 	<name>gov2go-api</name>
+	<description>Sistemas para Cidadania Corporativa. Iniciado como Trabalho de Graduação da FATEC Jesen Vidal &quot;São José dos Campos&quot;</description>
 	<organization>
 		<name>Hos-Labs</name>
 	</organization>
@@ -23,33 +24,85 @@
 	</licenses>
 
 	<properties>
+		<!-- Explicitly declaring the source encoding eliminates the following 
+			message: -->
+		<!-- [WARNING] Using platform encoding (UTF-8 actually) to copy filtered 
+			resources, i.e. build is platform dependent! -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<!-- JBoss dependency versions -->
+		<version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
+
+		<!-- Define the version of the JBoss BOMs we want to import to specify 
+			tested stacks. -->
+		<version.jboss.bom>8.0.0.Final</version.jboss.bom>
+		<version.arquillian.container>8.0.0.Final</version.arquillian.container>
+
+		<version.arquillian.rest.extension>1.0.0.Alpha3</version.arquillian.rest.extension>
+
+		<!-- other plugin versions -->
+		<version.compiler.plugin>3.1</version.compiler.plugin>
+		<version.surefire.plugin>2.16</version.surefire.plugin>
+		<version.war.plugin>2.1.1</version.war.plugin>
+
+		<!-- maven-compiler-plugin -->
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.fork>true</maven.compiler.fork>
-		<version.jboss.spec.javaee.7.0>1.0.0.Final</version.jboss.spec.javaee.7.0>
 	</properties>
 
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- Define the version of JBoss' Java EE 7 APIs we want to use -->
 			<!-- JBoss distributes a complete set of Java EE 7 APIs including a Bill 
 				of Materials (BOM). A BOM specifies the versions of a "stack" (or a collection) 
 				of artifacts. We use this here so that we always get the correct versions 
-				of artifacts. Here we use the jboss-javaee-web-6.0 stack (you can read this 
-				as the JBoss stack of the Java EE 7 Web Profile APIs) -->
+				of artifacts. Here we use the jboss-javaee-7.0-with-tools stack (you can 
+				read this as the JBoss stack of the Java EE 7 APIs, with some extras tools 
+				for your project, such as Arquillian for testing) and the jboss-javaee-7.0-with-hibernate 
+				stack you can read this as the JBoss stack of the Java EE 7 APIs, with extras 
+				from the Hibernate family of projects) -->
 			<dependency>
-				<groupId>org.jboss.spec</groupId>
-				<artifactId>jboss-javaee-7.0</artifactId>
-				<version>${version.jboss.spec.javaee.7.0}</version>
+				<groupId>org.wildfly.bom</groupId>
+				<artifactId>jboss-javaee-7.0-with-tools</artifactId>
+				<version>${version.jboss.bom}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			<dependency>
+				<groupId>org.wildfly.bom</groupId>
+				<artifactId>jboss-javaee-7.0-with-hibernate</artifactId>
+				<version>${version.jboss.bom}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.jboss.arquillian.extension</groupId>
+				<artifactId>arquillian-rest-warp-bom</artifactId>
+				<version>${version.arquillian.rest.extension}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>org.jboss.arquillian.extension</groupId>
+			<artifactId>arquillian-rest-client-api</artifactId>
+			<version>${version.arquillian.rest.extension}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.arquillian.extension</groupId>
+			<artifactId>arquillian-rest-client-impl-3x</artifactId>
+			<version>${version.arquillian.rest.extension}</version>
+			<scope>test</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>javax.enterprise</groupId>
@@ -69,12 +122,49 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- DEPENDENCIAS TESTES -->
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jackson-provider</artifactId>
+			<version>3.0.8.Final</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- DEPENDENCIAS TESTES :::: Atenção Não troque a ordem das Dependencias, 
+			:::: isso matará muitos Unicórnios em Narnia! =/ -->
+
+
+		<dependency>
+			<groupId>com.jayway.restassured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>2.3.3</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.9.5</version>
+			<scope>test</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Optional, but highly recommended -->
+		<!-- Arquillian allows you to test enterprise code such as EJBs and Transactional(JTA) 
+			JPA from JUnit/TestNG -->
+		<dependency>
+			<groupId>org.jboss.arquillian.junit</groupId>
+			<artifactId>arquillian-junit-container</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.arquillian.protocol</groupId>
+			<artifactId>arquillian-protocol-servlet</artifactId>
 			<scope>test</scope>
 		</dependency>
 
@@ -109,12 +199,6 @@
 		<dependency>
 			<groupId>org.jboss.spec.javax.transaction</groupId>
 			<artifactId>jboss-transaction-api_1.2_spec</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.jboss.resteasy</groupId>
-			<artifactId>jaxrs-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
 
@@ -158,7 +242,7 @@
 			<artifactId>jackson-mrbean</artifactId>
 			<version>1.9.13</version>
 		</dependency>
-		
+
 		<!-- JSR-303 (Bean Validation) Implementation -->
 		<!-- Provides portable constraints such as @Email -->
 		<!-- Hibernate Validator is shipped in JBoss WildFly -->
@@ -177,7 +261,6 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>4.3.6.Final</version>
 		</dependency>
 
 		<dependency>
@@ -185,23 +268,34 @@
 			<artifactId>hibernate-jpa-2.1-api</artifactId>
 		</dependency>
 
+		<!-- Annotation processor to generate the JPA 2.0 metamodel classes for 
+			typesafe criteria queries -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>4.3.1.Final</version>
+			<artifactId>hibernate-jpamodelgen</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Annotation processor that raising compilation errors whenever constraint 
+			annotations are incorrectly used. -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator-annotation-processor</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- DEPENDENCIAS REST (RESTEASY) -->
 
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
-			<artifactId>resteasy-jaxrs</artifactId>
-			<version>3.0.8.Final</version>
+			<artifactId>jaxrs-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
-			<artifactId>jaxrs-api</artifactId>
+			<artifactId>resteasy-jaxrs</artifactId>
+			<version>3.0.8.Final</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -218,34 +312,111 @@
 		</dependency>
 	</dependencies>
 
+	<build>
+		<!-- Maven will append the version to the finalName (which is the name 
+			given to the generated war, and hence the context root) -->
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<!-- Compiler plugin enforces Java 1.6 compatibility and activates annotation 
+				processors -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${version.compiler.plugin}</version>
+				<configuration>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${version.war.plugin}</version>
+				<configuration>
+					<!-- Java EE 7 doesn't require web.xml, Maven needs to catch up! -->
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+			<!-- The WildFly plugin deploys your war to a local WildFly container -->
+			<!-- To use, run: mvn package wildfly:deploy -->
+			<plugin>
+				<groupId>org.wildfly.plugins</groupId>
+				<artifactId>wildfly-maven-plugin</artifactId>
+				<version>${version.wildfly.maven.plugin}</version>
+			</plugin>
+		</plugins>
+	</build>
 	<profiles>
 		<profile>
-			<id>openshift</id>
+			<!-- The default profile skips all tests, though you can tune it to run 
+				just unit tests based on a custom pattern -->
+			<!-- Seperate profiles are provided for running all tests, including Arquillian 
+				tests that execute in the specified container -->
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<build>
-				<finalName>pacoteiro</finalName>
 				<plugins>
 					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-war-plugin</artifactId>
-						<version>2.3</version>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>${version.surefire.plugin}</version>
 						<configuration>
-							<failOnMissingWebXml>false</failOnMissingWebXml>
-							<outputDirectory>deployments</outputDirectory>
-							<warName>ROOT</warName>
+							<skip>true</skip>
 						</configuration>
 					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<!-- An optional Arquillian testing profile that executes tests in your 
+				WildFly instance -->
+			<!-- This profile will start a new WildFly instance, and execute the test, 
+				shutting it down when done -->
+			<!-- Run with: mvn clean test -Parq-wildfly-managed -->
+			<id>arq-wildfly-managed</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.wildfly</groupId>
+					<artifactId>wildfly-arquillian-container-managed</artifactId>
+					<version>${version.arquillian.container}</version>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<!-- An optional Arquillian testing profile that executes tests in a remote 
+				WildFly instance -->
+			<!-- Run with: mvn clean test -Parq-wildfly-remote -->
+			<id>arq-wildfly-remote</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.wildfly</groupId>
+					<artifactId>wildfly-arquillian-container-remote</artifactId>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<!-- When built in OpenShift the 'openshift' profile will be used when 
+				invoking mvn. -->
+			<!-- Use this profile for any OpenShift specific customization your app 
+				will need. -->
+			<!-- By default that is to put the resulting archive into the 'deployments' 
+				folder. -->
+			<!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
+			<id>openshift</id>
+			<build>
+				<plugins>
 					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-compiler-plugin</artifactId>
+						<artifactId>maven-war-plugin</artifactId>
+						<version>${version.war.plugin}</version>
 						<configuration>
-							<source>1.8</source>
-							<target>1.8</target>
-							<encoding>UTF-8</encoding>
+							<outputDirectory>deployments</outputDirectory>
+							<warName>ROOT</warName>
 						</configuration>
 					</plugin>
 				</plugins>
 			</build>
 		</profile>
 	</profiles>
-	<description>Sistemas para Cidadania Corporativa. Iniciado como Trabalho de Graduação da FATEC Jesen Vidal &quot;São José dos Campos&quot;</description>
+
 </project>

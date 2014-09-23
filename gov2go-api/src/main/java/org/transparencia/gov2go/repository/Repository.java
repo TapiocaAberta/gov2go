@@ -13,7 +13,7 @@ import javax.persistence.criteria.CriteriaQuery;
 public abstract class Repository<T> {
 	protected Class<T> tipo = retornaTipo();
 
-	@PersistenceContext(unitName = "gov2go-unit")
+	@PersistenceContext
 	protected EntityManager em;
 
 	public void novo(T entidade) {
