@@ -1,5 +1,6 @@
 package org.transparencia.gov2go.constantes;
 
+
 public class ConstantesTest {
 	
 	public static final String TEST_DS = "test-ds.xml";
@@ -13,5 +14,8 @@ public class ConstantesTest {
 	public static final String MODEL_CONSTANTES = "org.transparencia.gov2go.model.constantes";
 	public static final String MODEL = "org.transparencia.gov2go.model";
 	public static final String WAR_NAME = "gov2go-api-test.war";
+	public static final String SERVICE = "org.transparencia.gov2go.services";
+	
+	public static final String LOCATION = "LOCATION";
 
 }

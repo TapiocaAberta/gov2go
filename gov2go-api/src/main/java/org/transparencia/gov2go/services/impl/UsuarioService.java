@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 import org.slf4j.Logger;
+import org.transparencia.gov2go.endpoints.UsuarioEndpoint;
 import org.transparencia.gov2go.model.impl.Usuario;
 import org.transparencia.gov2go.repository.impl.Usuarios;
 import org.transparencia.gov2go.services.Service;
@@ -22,12 +23,12 @@ public class UsuarioService implements Service <Usuario>{
 	public Response criar(Usuario entidade) {
 		
 		if (usuarioExiste(entidade.getEmail())) {
-			log.info("Usuario: " + entidade.getEmail() + " existe!");
+			log.info( "Usuario: " + entidade.getEmail() + " existe!" );
 			return Response.status(CONFLICT).build();
 		}
 
 		usuarios.novo(entidade);
-		return Response.ok().build();
+		return recursoCriado(UsuarioEndpoint.class, entidade.getId(), entidade);
 	}
 
 	@Override

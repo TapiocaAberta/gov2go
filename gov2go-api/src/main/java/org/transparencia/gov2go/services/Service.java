@@ -4,8 +4,11 @@ import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 
-public interface Service <T> {
+import org.transparencia.gov2go.model.ModelDefault;
+
+public interface Service <T extends ModelDefault> {
 
 	Response criar(T entidade);
 
@@ -29,6 +32,19 @@ public interface Service <T> {
 			throw new WebApplicationException(Response.status(NOT_FOUND).build());
 		}
 		return object;
+	}
+	
+	
+	default Response recursoCriado(Class<?> resource, Long id, String mimeType, T entidade) {
+		return Response.created( UriBuilder.fromResource(resource)
+								.path(String.valueOf(id)).build() )
+								.entity(entidade)
+								.type(mimeType)
+								.build();
+	}
+	
+	default Response recursoCriado(Class<?> resource, Long id, T entidade) {
+		return recursoCriado(resource, id, "application/json", entidade);
 	}
 
 }

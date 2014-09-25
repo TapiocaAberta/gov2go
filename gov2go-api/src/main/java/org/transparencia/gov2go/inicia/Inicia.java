@@ -26,7 +26,7 @@ import org.transparencia.gov2go.repository.impl.Usuarios;
  */
 @Startup
 @Singleton
-public class PopulaBanco {
+public class Inicia {
 	
 	@Inject
 	private Usuarios usuarios;
@@ -88,7 +88,7 @@ public class PopulaBanco {
 	}
 
 	private byte[] getImage() throws IOException {
-		InputStream is = PopulaBanco.class.getResourceAsStream("/pichado.jpg");
+		InputStream is = Inicia.class.getResourceAsStream("/pichado.jpg");
 		byte[] foto = new byte[is.available()];
 		
 		is.read(foto);

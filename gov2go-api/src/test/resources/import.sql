@@ -1,0 +1,1 @@
+INSERT INTO usuario (id, nome, email) VALUES (1, 'Pedro Hos', 'pedro-hos@outlook.com')

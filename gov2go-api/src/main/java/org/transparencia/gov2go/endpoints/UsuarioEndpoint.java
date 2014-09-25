@@ -1,6 +1,5 @@
 package org.transparencia.gov2go.endpoints;
 
-import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -13,7 +12,6 @@ import javax.ws.rs.core.Response;
 
 import org.transparencia.gov2go.model.impl.Usuario;
 
-@Stateless
 @Path("usuario")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -32,5 +30,5 @@ public interface UsuarioEndpoint {
 	@PUT
 	@Path("/{id:[0-9][0-9]*}")
 	public void atualizar(@PathParam("id") Long id, Usuario entidade);
-
+	
 }

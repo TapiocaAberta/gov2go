@@ -38,7 +38,7 @@ public class OcorrenciaService implements Service <Ocorrencia>{
 		lanca404SeNulo(usuario);
 		ocorrencia.setUsuario(usuario);
 		ocorrencias.novo(ocorrencia);
-		return Response.ok().build();
+		return recursoCriado(OcorrenciaEndpoint.class, ocorrencia.getId(), ocorrencia);
 		
 	}
 
@@ -83,7 +83,7 @@ public class OcorrenciaService implements Service <Ocorrencia>{
 		
 		return Response.created( UriBuilder.fromResource(OcorrenciaEndpoint.class)
 							  		.path(String.valueOf(id) + "/imagem")
-							  		.build() ).build();
+							  		.build() ).type(mimeType).build();
 	}
 
 }

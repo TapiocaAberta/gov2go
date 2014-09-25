@@ -4,9 +4,12 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaQuery;
+
+import org.slf4j.Logger;
 
 @Stateless
 @SuppressWarnings("unchecked")
@@ -15,6 +18,9 @@ public abstract class Repository<T> {
 
 	@PersistenceContext
 	protected EntityManager em;
+	
+	@Inject
+	protected Logger log;
 
 	public void novo(T entidade) {
 		em.persist(entidade);
